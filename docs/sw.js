@@ -1,5 +1,5 @@
 /* Service worker do Tração: guarda o app inteiro para funcionar sem internet. */
-const VERSION = '1.0.0-c0e199cf';
+const VERSION = '1.1.0-ff1380ca';
 const CACHE = 'tracao-' + VERSION;
 const ASSETS = [
   "./",
