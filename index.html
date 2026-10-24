@@ -711,130 +711,366 @@ const PROGRAMS = [
 ];
 const PROG = Object.fromEntries(PROGRAMS.map(p => [p.id, p]));
 
-/* ---------- Animações (bonecos em SVG, 200x200) ---------- */
-const STAND = {h:[100,36],s:[100,56],e:[100,80],w:[101,102],p:[100,104],k:[101,138],f:[100,172]};
-const SQ_DN = {h:[116,82],s:[108,98],e:[130,102],w:[152,100],p:[84,138],k:[118,145],f:[100,172]};
-const up = (pose, dy) => Object.fromEntries(Object.entries(pose).map(([k,v]) => [k, k==='f'||k==='f2' ? v : [v[0], v[1]-dy]]));
-const ANIMS = {
-  push:{props:['floor'],d:2200,f:[
-    {h:[167,118],s:[150,128],e:[151,150],w:[152,172],p:[96,145],k:[68,157],f:[40,170]},
-    {h:[167,148],s:[150,156],e:[132,157],w:[152,172],p:[96,160],k:[68,165],f:[40,170]}]},
-  pike:{props:['floor'],d:2400,f:[
-    {h:[132,128],s:[124,116],e:[128,144],w:[132,172],p:[86,84],k:[62,128],f:[40,170]},
-    {h:[142,158],s:[122,140],e:[108,152],w:[132,172],p:[86,94],k:[62,132],f:[40,170]}]},
-  dip:{props:['parallels'],d:2400,f:[
-    {h:[104,44],s:[100,60],e:[100,78],w:[100,95],p:[98,112],k:[98,136],f:[78,142]},
-    {h:[109,69],s:[103,85],e:[80,84],w:[100,95],p:[98,136],k:[97,158],f:[77,163]}]},
-  pull:{props:['bar'],d:2600,f:[
-    {h:[106,52],s:[100,66],e:[100,48],w:[100,30],p:[100,120],k:[100,148],f:[100,176]},
-    {h:[106,20],s:[100,44],e:[82,52],w:[100,30],p:[100,96],k:[100,124],f:[100,152]}]},
-  hang:{props:['bar'],d:3000,f:[
-    {h:[106,52],s:[100,66],e:[100,48],w:[100,30],p:[100,120],k:[100,148],f:[100,176]},
-    {h:[106,50],s:[100,63],e:[100,47],w:[100,30],p:[101,117],k:[102,146],f:[103,174]}]},
-  hangknee:{props:['bar'],d:2400,f:[
-    {h:[106,52],s:[100,66],e:[100,48],w:[100,30],p:[100,120],k:[100,148],f:[100,176]},
-    {h:[104,52],s:[100,66],e:[100,48],w:[100,30],p:[100,116],k:[128,108],f:[126,140]}]},
-  row:{props:['lowbar'],d:2400,f:[
-    {h:[160,140],s:[146,134],e:[148,116],w:[150,98],p:[96,152],k:[68,162],f:[40,172]},
-    {h:[156,106],s:[140,112],e:[124,104],w:[150,98],p:[92,140],k:[66,157],f:[40,172]}]},
-  bentrow:{props:['floor'],d:2200,f:[
-    {h:[144,62],s:[130,74],e:[132,98],w:[134,122],p:[96,108],k:[108,140],f:[98,172]},
-    {h:[144,62],s:[130,74],e:[110,90],w:[126,98],p:[96,108],k:[108,140],f:[98,172]}]},
-  squat:{props:['floor'],d:2400,f:[STAND,SQ_DN]},
-  squathold:{props:['floor'],d:3400,f:[SQ_DN,{...SQ_DN,h:[116,79],s:[108,95],p:[84,136]}]},
-  lunge:{props:['floor'],d:2600,f:[
-    {h:[100,36],s:[100,56],e:[100,80],w:[101,102],p:[100,104],k:[112,138],f:[118,172],k2:[90,138],f2:[80,172]},
-    {h:[100,60],s:[100,82],e:[100,104],w:[101,126],p:[100,134],k:[134,136],f:[134,172],k2:[96,166],f2:[64,170]}]},
-  bridge:{props:['floor'],d:2400,f:[
-    {h:[36,162],s:[56,166],e:[76,170],w:[96,171],p:[104,166],k:[134,140],f:[142,172]},
-    {h:[36,162],s:[58,163],e:[76,170],w:[96,171],p:[104,138],k:[136,132],f:[142,172]}]},
-  calf:{props:['floor'],d:1800,f:[STAND, up(STAND,9)]},
-  plank:{props:['floor'],d:3200,f:[
-    {h:[168,140],s:[152,148],e:[152,170],w:[174,171],p:[98,152],k:[68,160],f:[40,170]},
-    {h:[168,139],s:[152,147],e:[152,170],w:[174,171],p:[98,149],k:[68,159],f:[40,170]}]},
-  hollow:{props:['floor'],d:3000,f:[
-    {h:[78,156],s:[90,160],e:[68,150],w:[46,142],p:[130,166],k:[154,156],f:[178,148]},
-    {h:[78,157],s:[90,161],e:[68,152],w:[46,145],p:[130,166],k:[154,158],f:[178,151]}]},
-  legraise:{props:['floor'],d:2600,f:[
-    {h:[40,162],s:[58,166],e:[78,170],w:[98,171],p:[110,168],k:[140,166],f:[170,166]},
-    {h:[40,162],s:[58,166],e:[78,170],w:[98,171],p:[110,168],k:[124,138],f:[136,106]}]},
-  lsit:{props:['floor'],d:3000,f:[
-    {h:[104,100],s:[100,118],e:[100,144],w:[100,172],p:[100,160],k:[134,160],f:[168,160]},
-    {h:[104,98],s:[100,116],e:[100,143],w:[100,172],p:[100,157],k:[134,157],f:[168,156]}]},
-  handstand:{props:['floor','wall'],d:3200,f:[
-    {h:[100,148],s:[100,128],e:[100,150],w:[100,172],p:[100,80],k:[100,52],f:[100,22]},
-    {h:[100,148],s:[100,128],e:[100,150],w:[100,172],p:[101,80],k:[102,52],f:[104,22]}]},
-  jack:{props:['floor'],d:1100,f:[
-    {h:[100,36],s:[100,56],e:[90,80],w:[88,102],e2:[110,80],w2:[112,102],p:[100,106],k:[95,138],f:[93,172],k2:[105,138],f2:[107,172]},
-    {h:[100,32],s:[100,52],e:[80,40],w:[70,20],e2:[120,40],w2:[130,20],p:[100,102],k:[86,136],f:[74,170],k2:[114,136],f2:[126,170]}]},
-  reach:{props:['floor'],d:2200,f:[
-    {h:[100,36],s:[100,56],e:[80,58],w:[60,58],e2:[120,58],w2:[140,58],p:[100,106],k:[95,138],f:[93,172],k2:[105,138],f2:[107,172]},
-    {h:[100,36],s:[100,56],e:[84,40],w:[74,22],e2:[116,40],w2:[126,22],p:[100,106],k:[95,138],f:[93,172],k2:[105,138],f2:[107,172]}]},
-  tucklever:{props:['bar'],d:3000,f:[
-    {h:[80,64],s:[100,64],e:[100,47],w:[100,30],p:[146,68],k:[128,48],f:[150,44]},
-    {h:[80,63],s:[100,63],e:[100,47],w:[100,30],p:[146,66],k:[128,46],f:[150,42]}]},
-  crow:{props:['floor'],d:3000,f:[
-    {h:[72,140],s:[92,132],e:[100,150],w:[100,172],p:[128,116],k:[106,140],f:[136,152]},
-    {h:[72,141],s:[92,133],e:[100,151],w:[100,172],p:[128,113],k:[106,139],f:[136,149]}]},
-  climber:{props:['floor'],d:900,f:[
-    {h:[167,118],s:[150,128],e:[151,150],w:[152,172],p:[96,145],k:[68,157],f:[40,170],k2:[122,154],f2:[106,170]},
-    {h:[167,118],s:[150,128],e:[151,150],w:[152,172],p:[96,145],k:[122,154],f:[106,170],k2:[68,157],f2:[40,170]}]},
-  wallsit:{props:['floor','wallL'],d:3200,f:[
-    {h:[78,64],s:[78,82],e:[92,102],w:[108,122],p:[78,130],k:[112,130],f:[112,172]},
-    {h:[78,63],s:[78,81],e:[92,101],w:[108,121],p:[78,129],k:[112,130],f:[112,172]}]},
-  nordic:{props:['floor'],d:3400,f:[
-    {h:[80,58],s:[80,76],e:[86,100],w:[92,122],p:[80,124],k:[80,172],f:[48,172]},
-    {h:[167,98],s:[153,110],e:[160,130],w:[166,152],p:[117,141],k:[80,172],f:[48,172]}]},
-  catcow:{props:['floor'],d:3000,f:[
-    {h:[158,118],s:[140,128],e:[140,150],w:[140,172],p:[84,128],k:[84,172],f:[50,172]},
-    {h:[156,142],s:[140,120],e:[140,146],w:[140,172],p:[84,120],k:[84,172],f:[50,172]}]},
-  jumpsquat:{props:['floor'],d:1300,f:[SQ_DN, Object.fromEntries(Object.entries(STAND).map(([k,v]) => [k,[v[0],v[1]-16]]))]},
-  fold:{props:['floor'],d:3400,f:[
-    STAND,
-    {h:[138,156],s:[128,143],e:[130,160],w:[132,172],p:[100,104],k:[101,138],f:[100,172]}]},
-};
-const PROPS = {
-  floor:'<line x1="14" y1="177" x2="186" y2="177" stroke="var(--line)" stroke-width="3" stroke-linecap="round"/>',
-  bar:'<line x1="52" y1="28" x2="148" y2="28" stroke="var(--muted)" stroke-width="5" stroke-linecap="round"/>',
-  lowbar:'<line x1="126" y1="96" x2="190" y2="96" stroke="var(--muted)" stroke-width="5" stroke-linecap="round"/><line x1="182" y1="96" x2="182" y2="177" stroke="var(--line)" stroke-width="4"/><line x1="14" y1="177" x2="190" y2="177" stroke="var(--line)" stroke-width="3" stroke-linecap="round"/>',
-  parallels:'<line x1="62" y1="97" x2="138" y2="97" stroke="var(--muted)" stroke-width="5" stroke-linecap="round"/><line x1="70" y1="97" x2="70" y2="177" stroke="var(--line)" stroke-width="4"/><line x1="130" y1="97" x2="130" y2="177" stroke="var(--line)" stroke-width="4"/><line x1="40" y1="177" x2="160" y2="177" stroke="var(--line)" stroke-width="3" stroke-linecap="round"/>',
-  wall:'<line x1="113" y1="8" x2="113" y2="177" stroke="var(--line)" stroke-width="4"/>',
-  wallL:'<line x1="66" y1="20" x2="66" y2="177" stroke="var(--line)" stroke-width="4"/>',
-};
-const lerp = (a,b,t) => a + (b-a)*t;
-function poseAt(key, t){
-  const A = ANIMS[key], [a,b] = A.f, out = {};
-  for (const k of new Set([...Object.keys(a), ...Object.keys(b)])){
-    const pa = a[k] || a[k.replace('2','')], pb = b[k] || b[k.replace('2','')];
-    out[k] = [lerp(pa[0],pb[0],t), lerp(pa[1],pb[1],t)];
+/* ---------- Animações dos exercícios ---------- */
+/* Esqueleto 2D com comprimentos fixos: cada pose diz onde ficam quadril, tronco, mãos e pés,
+   e os cotovelos e joelhos saem de cinemática inversa. Assim nada estica entre as poses.
+   Ângulos em graus no sistema da tela (0 = direita, 90 = para baixo). Chão em y = 177. */
+const SEG = {torso:46, head:19, ua:25, fa:24, th:34, sh:34, foot:9};
+const rad = d => d * Math.PI / 180;
+const unit = (a, b) => { const dx = b[0]-a[0], dy = b[1]-a[1], d = Math.hypot(dx, dy) || 1; return [dx/d, dy/d]; };
+/* Corpo reto apoiado no tornozelo (ou joelho) até o ombro: devolve quadril e ângulo do tronco */
+function line(base, shoulder, leg = 68){
+  const u = unit(base, shoulder), hip = [base[0] + u[0]*leg, base[1] + u[1]*leg];
+  return {hip, t: Math.atan2(shoulder[1]-hip[1], shoulder[0]-hip[0]) * 180 / Math.PI};
+}
+const hipFor = (shoulder, t) => [shoulder[0] - Math.cos(rad(t))*SEG.torso, shoulder[1] - Math.sin(rad(t))*SEG.torso];
+function ik(a, t, l1, l2, s){
+  const th = Math.atan2(t[1]-a[1], t[0]-a[0]);
+  const d = Math.min(Math.max(Math.hypot(t[0]-a[0], t[1]-a[1]), Math.abs(l1-l2) + .01), l1 + l2 - .01);
+  const al = Math.acos((l1*l1 + d*d - l2*l2) / (2*l1*d));
+  return [[a[0] + Math.cos(th + s*al)*l1, a[1] + Math.sin(th + s*al)*l1], [a[0] + Math.cos(th)*d, a[1] + Math.sin(th)*d]];
+}
+function norm(f, A){
+  const p = {...f};
+  p.f1 = p.f1 || [p.hip[0], p.hip[1] + 68];
+  p.n = p.n || 0; p.arch = p.arch || 0; p.eb = p.eb ?? 1; p.kb = p.kb ?? -1;
+  p.eb2 = p.eb2 ?? p.eb; p.kb2 = p.kb2 ?? p.kb;
+  p.h2 = p.h2 || [p.h1[0] - (A.front ? 0 : 4), p.h1[1]];
+  p.f2 = p.f2 || [p.f1[0] - (A.front ? 0 : 4), p.f1[1]];
+  p.fa = p.fa ?? (A.front ? 180 : 0); p.fa2 = p.fa2 ?? (A.front ? 0 : p.fa);
+  return p;
+}
+const mixN = (a, b, k) => a + (b - a) * k;
+const mixP = (a, b, k) => [mixN(a[0], b[0], k), mixN(a[1], b[1], k)];
+function mix(a, b, k){
+  const o = {};
+  for (const key in b){
+    const x = a[key], y = b[key];
+    if (Array.isArray(y)) o[key] = mixP(x || y, y, k);
+    else if (typeof y === 'number' && !/^(eb|kb)/.test(key)) o[key] = mixN(x ?? y, y, k);
+    else o[key] = k < .5 && x !== undefined ? x : y;
   }
-  return out;
+  return o;
 }
-function figSVG(key, t=0, opts={}){
-  const A = ANIMS[key] || ANIMS.squat, P = poseAt(key in ANIMS ? key : 'squat', t);
-  const front = !!P.e2 && (key==='jack' || key==='reach');
-  const back = (k, dx) => P[k+'2'] || [P[k][0]+dx, P[k][1]];
-  const L = (a,b,cls) => `<line x1="${a[0].toFixed(1)}" y1="${a[1].toFixed(1)}" x2="${b[0].toFixed(1)}" y2="${b[1].toFixed(1)}" class="${cls}"/>`;
-  const sw = opts.thin ? 9 : 7;
-  const e2 = back('e',-5), w2 = back('w',-5), k2 = back('k',-5), f2 = back('f',-5);
-  const bc = front ? 'fg' : 'bk';
-  return `<svg viewBox="0 0 200 200" aria-hidden="true"><style>.fg{stroke:var(--fg);stroke-width:${sw};stroke-linecap:round}.bk{stroke:var(--muted);stroke-width:${sw};stroke-linecap:round;opacity:.55}</style>
-    ${A.props.map(p => PROPS[p]).join('')}
-    ${L(P.s,e2,bc)}${L(e2,w2,bc)}${L(P.p,k2,bc)}${L(k2,f2,bc)}
-    ${L(P.s,P.p,'fg')}${L(P.p,P.k,'fg')}${L(P.k,P.f,'fg')}${L(P.s,P.e,'fg')}${L(P.e,P.w,'fg')}
-    <circle cx="${P.h[0].toFixed(1)}" cy="${P.h[1].toFixed(1)}" r="11" fill="var(--fg)"/></svg>`;
+function skel(p, A){
+  const ta = rad(p.t), dir = [Math.cos(ta), Math.sin(ta)], perp = [-dir[1], dir[0]];
+  const tl = A.torso || SEG.torso, hip = p.hip, sh = [hip[0] + dir[0]*tl, hip[1] + dir[1]*tl];
+  const na = ta + rad(p.n), head = [sh[0] + Math.cos(na)*SEG.head, sh[1] + Math.sin(na)*SEG.head];
+  const w = A.sw || (A.front ? 11 : 0), hw = A.front ? 6 : 0;
+  const sh1 = [sh[0] - perp[0]*w, sh[1] - perp[1]*w], sh2 = [sh[0] + perp[0]*w, sh[1] + perp[1]*w];
+  const hp1 = [hip[0] - perp[0]*hw, hip[1] - perp[1]*hw], hp2 = [hip[0] + perp[0]*hw, hip[1] + perp[1]*hw];
+  const [e1, w1] = ik(sh1, p.h1, SEG.ua, SEG.fa, p.eb), [e2, w2] = ik(sh2, p.h2, SEG.ua, SEG.fa, p.eb2);
+  const [k1, a1] = ik(hp1, p.f1, SEG.th, SEG.sh, p.kb), [k2, a2] = ik(hp2, p.f2, SEG.th, SEG.sh, p.kb2);
+  const foot = (a, fa) => [a[0] + Math.cos(rad(fa))*SEG.foot, a[1] + Math.sin(rad(fa))*SEG.foot];
+  const fd = ta + Math.PI/2 + rad(p.n);
+  return {hip, sh, head, sh1, sh2, hp1, hp2, e1, w1, e2, w2, k1, a1, k2, a2, t1:foot(a1, p.fa), t2:foot(a2, p.fa2),
+    mid:[(hip[0] + sh[0])/2 + perp[0]*p.arch, (hip[1] + sh[1])/2 + perp[1]*p.arch],
+    eye: A.front || p.noEye ? null : [head[0] + Math.cos(fd)*4.6, head[1] + Math.sin(fd)*4.6]};
 }
+const ease = {
+  io: k => .5 - Math.cos(Math.PI * k) / 2,
+  out: k => 1 - Math.pow(1 - k, 3),
+  in: k => k * k * k,
+  lin: k => k,
+};
+function sample(A, now){
+  const F = A.F, total = A.total;
+  let t = ((now % total) + total) % total;
+  for (let i = 0; i < F.length; i++){
+    const f = F[i], prev = F[(i - 1 + F.length) % F.length];
+    if (t < f.ms) return {p: mix(prev.P, f.P, (ease[f.ease] || ease.io)(t / f.ms)), say: f.say, i};
+    t -= f.ms;
+    if (t < f.hold) return {p: f.P, say: f.hsay || f.say, i};
+    t -= f.hold;
+  }
+  return {p: F[0].P, say: F[0].say, i: 0};
+}
+const pt = a => `${a[0].toFixed(1)},${a[1].toFixed(1)}`;
+function propSVG(pr, S){
+  const [k, ...v] = Array.isArray(pr) ? pr : [pr];
+  const L = 'var(--line)', F = 'var(--surface-2)', M = 'var(--muted)';
+  switch (k){
+    case 'floor': return `<line x1="4" y1="177" x2="196" y2="177" stroke="${L}" stroke-width="3" stroke-linecap="round"/>`;
+    case 'bench': { const [x, y, w] = v; return `<path d="M${x+5} ${y+6}V177M${x+w-5} ${y+6}V177" stroke="${L}" stroke-width="3"/><rect x="${x}" y="${y}" width="${w}" height="7" rx="2" fill="${F}" stroke="${L}" stroke-width="2"/>`; }
+    case 'box': { const [x, y, w] = v; return `<rect x="${x}" y="${y}" width="${w}" height="${177-y}" rx="3" fill="${F}" stroke="${L}" stroke-width="2"/>`; }
+    case 'wall': { const [x, side = 1] = v; return `<rect x="${side > 0 ? x : x-10}" y="0" width="10" height="177" fill="${F}"/><line x1="${x}" y1="0" x2="${x}" y2="177" stroke="${L}" stroke-width="2.5"/>`; }
+    case 'bar': { const [y, x1 = 46, x2 = 154] = v; return `<line x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke="${M}" stroke-width="5" stroke-linecap="round"/>`; }
+    case 'lowbar': { const [x1, x2, y] = v; return `<line x1="${x2-5}" y1="${y}" x2="${x2-5}" y2="177" stroke="${L}" stroke-width="4"/><line x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke="${M}" stroke-width="5" stroke-linecap="round"/>`; }
+    case 'par': { const [y, x1 = 58, x2 = 142] = v; return `<path d="M${x1+6} ${y}V177M${x2-6} ${y}V177" stroke="${L}" stroke-width="4"/><line x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke="${M}" stroke-width="5" stroke-linecap="round"/>`; }
+    case 'chair': { const [x, y] = v; return `<path d="M${x+3} ${y}V177M${x+31} ${y}V177M${x+2} ${y}V${y-38}" stroke="${L}" stroke-width="3.5" stroke-linecap="round"/><rect x="${x}" y="${y-3}" width="36" height="6" rx="2" fill="${F}" stroke="${L}" stroke-width="2"/>`; }
+    case 'post': return `<line x1="${v[0]}" y1="6" x2="${v[0]}" y2="177" stroke="${M}" stroke-width="5" stroke-linecap="round"/>`;
+    case 'pad': return `<rect x="${v[0]}" y="${v[1]}" width="22" height="9" rx="4.5" fill="${M}"/>`;
+    case 'ptt': { const [x, y] = v; return `<path d="M${x-12} ${y}V177M${x+12} ${y}V177" stroke="${L}" stroke-width="3"/><line x1="${x-16}" y1="${y}" x2="${x+16}" y2="${y}" stroke="${M}" stroke-width="4.5" stroke-linecap="round"/>`; }
+    case 'bag': return `<rect x="${(S.w1[0]-8).toFixed(1)}" y="${(S.w1[1]-1).toFixed(1)}" width="16" height="19" rx="4.5" fill="var(--brand)"/><path d="M${(S.w1[0]-4).toFixed(1)} ${(S.w1[1]+1).toFixed(1)}h8" stroke="var(--bg)" stroke-width="1.5" opacity=".5"/>`;
+  }
+  return '';
+}
+function bodySVG(S, A, o){
+  const focus = A.focus || [], acc = 'var(--accent)', fg = o.ghost ? 'var(--muted)' : 'var(--fg)';
+  const c = seg => !o.thin && !o.ghost && focus.includes(seg) ? acc : fg;
+  const back = A.front ? null : 'var(--muted)';
+  const lw = o.thin ? 9 : 7, tw = o.thin ? 11 : 9;
+  const poly = (pts, col, w, op = 1) => `<polyline points="${pts.map(pt).join(' ')}" fill="none" stroke="${col}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round"${op < 1 ? ` opacity="${op}"` : ''}/>`;
+  let s = '';
+  s += poly([S.sh2, S.e2, S.w2], back || c('arms'), lw, back ? .55 : 1);
+  if (!A.noLegs) s += poly([S.hp2, S.k2, S.a2, S.t2], back || c('legs'), lw, back ? .55 : 1);
+  s += `<path d="M${pt(S.hip)} Q${pt(S.mid)} ${pt(S.sh)}" fill="none" stroke="${c('core')}" stroke-width="${tw}" stroke-linecap="round"/>`;
+  if (A.front) s += poly([S.sh1, S.sh2], c('core'), lw) + (A.noLegs ? '' : poly([S.hp1, S.hp2], c('core'), lw));
+  if (!A.noLegs) s += poly([S.hp1, S.k1, S.a1, S.t1], c('legs'), lw);
+  s += poly([S.sh1, S.e1, S.w1], c('arms'), lw);
+  s += `<line x1="${S.sh[0].toFixed(1)}" y1="${S.sh[1].toFixed(1)}" x2="${S.head[0].toFixed(1)}" y2="${S.head[1].toFixed(1)}" stroke="${fg}" stroke-width="6" stroke-linecap="round"/>`;
+  s += `<circle cx="${S.head[0].toFixed(1)}" cy="${S.head[1].toFixed(1)}" r="${o.thin ? 12 : 10.5}" fill="${fg}"/>`;
+  if (S.eye && !o.ghost && !o.thin) s += `<circle cx="${S.eye[0].toFixed(1)}" cy="${S.eye[1].toFixed(1)}" r="1.8" fill="var(--bg)"/>`;
+  return o.ghost ? `<g opacity=".16">${s}</g>` : s;
+}
+/* time: milissegundos (animado) ou null (pose de miniatura) */
+function figSVG(key, time, opts = {}){
+  const A = FIG[key] || FIG.agachamento;
+  const anim = typeof time === 'number' && time > 1;
+  const st = anim ? sample(A, time) : {p: A.F[A.thumb ?? 1 % A.F.length].P, say: ''};
+  const S = skel(st.p, A);
+  const vb = (A.vb || [0, 0, 200, 200]);
+  const props = (A.props || ['floor']);
+  let s = props.filter(p => p !== 'bag' && p[0] !== 'bag').map(p => propSVG(p, S)).join('');
+  if (!A.noLegs && (props.includes("floor") || props.some(p => p[0] === "floor"))) s += `<ellipse cx="${S.hip[0].toFixed(1)}" cy="178" rx="34" ry="3.2" fill="var(--fg)" opacity=".07"/>`;
+  if (anim && A.ghost != null) s += bodySVG(skel(A.F[A.ghost].P, A), A, {ghost:true});
+  s += bodySVG(S, A, opts);
+  if (props.includes('bag')) s += propSVG('bag', S);
+  if (anim && A.track){
+    const S0 = skel(sample(A, time - 70).p, A), a = S0[A.track], b = S[A.track], dx = b[0]-a[0], dy = b[1]-a[1], d = Math.hypot(dx, dy);
+    if (d > .9){
+      const ux = dx/d, uy = dy/d, o = A.ao || [20, -4], cx = b[0] + o[0], cy = b[1] + o[1];
+      s += `<g stroke="var(--accent-text)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity=".95"><path d="M${(cx-ux*9).toFixed(1)} ${(cy-uy*9).toFixed(1)}L${(cx+ux*9).toFixed(1)} ${(cy+uy*9).toFixed(1)}"/><path d="M${(cx+ux*9-ux*6-uy*5).toFixed(1)} ${(cy+uy*9-uy*6+ux*5).toFixed(1)}L${(cx+ux*9).toFixed(1)} ${(cy+uy*9).toFixed(1)}L${(cx+ux*9-ux*6+uy*5).toFixed(1)} ${(cy+uy*9-uy*6-ux*5).toFixed(1)}"/></g>`;
+    }
+  }
+  if (anim && st.say) s += `<text x="${vb[0] + vb[2]/2}" y="${vb[1] + vb[3] - 6}" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--accent-text)" style="font-family:var(--font-body)">${st.say}</text>`;
+  return `<svg viewBox="${vb.join(' ')}" aria-hidden="true">${s}</svg>`;
+}
+
+/* ---- Poses de base reutilizadas ---- */
+const STAND = {hip:[100,104], t:-90, h1:[103,107], f1:[100,172]};
+const standAt = (x, extra = {}) => ({hip:[x,104], t:-90, h1:[x+3,107], f1:[x,172], ...extra});
+const PLANK_UP = {...line([36,169], [146,126]), h1:[150,174], f1:[36,169], fa:40};
+const PLANK_DN = {...line([36,169], [148,154]), h1:[150,174], f1:[36,169], fa:40};
+const HANG = {hip:[100,111], t:-90, h1:[100,16], f1:[100,184], fa:60};
+const PULL_TOP = {hip:[100,76], t:-90, h1:[100,16], f1:[98,142], fa:60, n:-6};
+const LIE = {hip:[100,168], t:180, h1:[100,173], f1:[166,168], fa:-70};
+const SQ_BOT = {hip:[80,140], t:-55, h1:[150,100], f1:[100,172]};
+const PUSH_FR = (hand, top, bot) => [
+  {...line([36,169], top), h1:hand, f1:[36,169], fa:40, ms:900, hold:350, say:'Empurre o chão'},
+  {...line([36,169], bot), h1:hand, f1:[36,169], fa:40, ms:1300, hold:250, say:'Desça com o corpo reto'}];
+const A_ = (o) => o;
+
+const FIG = {
+  /* Mobilidade e aquecimento */
+  polichinelo: {front:true, focus:['legs','arms'], track:'w1', ao:[-14,0], F:[
+    {hip:[100,104], t:-90, h1:[84,110], h2:[116,110], f1:[94,172], f2:[106,172], eb:1, eb2:-1, kb:1, kb2:-1, ms:340, hold:60, say:'Feche'},
+    {hip:[100,98], t:-90, h1:[72,12], h2:[128,12], f1:[72,168], f2:[128,168], eb:1, eb2:-1, kb:1, kb2:-1, ms:340, hold:60, say:'Salte abrindo'}]},
+  circulos: {front:true, focus:['arms'], track:'w1', ao:[0,-16], F:[0,1,2,3].map(i => { const a = i*Math.PI/2, dx = Math.cos(a)*9, dy = Math.sin(a)*9;
+    return {hip:[100,104], t:-90, h1:[44+dx,58+dy], h2:[156-dx,58+dy], f1:[92,172], f2:[108,172], eb:1, eb2:-1, ms:320, hold:0, ease:'lin', say:'Círculos pequenos'}; })},
+  along_post: {focus:['legs'], track:'head', ao:[18,0], ghost:1, F:[
+    {...standAt(96), ms:1100, hold:500, say:'Volte devagar'},
+    {hip:[92,104], t:58, n:14, h1:[112,166], f1:[100,172], ms:1600, hold:2200, say:'Dobre o quadril, costas longas', hsay:'Respire e solte'}]},
+  mob_agach: {focus:['legs'], F:[
+    {hip:[90,152], t:-72, h1:[124,116], f1:[106,172], ms:1600, hold:300, say:'Calcanhares no chão'},
+    {hip:[91,149], t:-76, h1:[124,113], f1:[106,172], ms:1600, hold:300, say:'Cotovelos abrem os joelhos'}]},
+  gato_vaca: {focus:['core'], F:[
+    {...{hip:[86,138], t:-12}, h1:[136,174], f1:[52,172], fa:180, arch:-15, n:45, ms:1700, hold:400, say:'Arredonde as costas'},
+    {...{hip:[86,138], t:-12}, h1:[136,174], f1:[52,172], fa:180, arch:13, n:-35, ms:1700, hold:400, say:'Afunde e olhe à frente'}]},
+  rot_toracica: {front:true, focus:['core'], F:[
+    {hip:[100,104], t:-90, h1:[42,62], h2:[126,70], f1:[93,172], f2:[107,172], eb:1, eb2:-1, ms:1300, hold:300, say:'Gire para um lado'},
+    {hip:[100,104], t:-90, h1:[74,70], h2:[158,62], f1:[93,172], f2:[107,172], eb:1, eb2:-1, ms:1300, hold:300, say:'Gire para o outro'}]},
+  along_peito: {props:['floor',['wall',58,-1]], focus:['arms'], F:[
+    {...standAt(94), h1:[60,60], ms:1200, hold:300, say:'Mão e antebraço na parede'},
+    {...standAt(102), t:-84, h1:[60,60], ms:1600, hold:1800, say:'Gire o corpo para longe', hsay:'Segure e respire'}]},
+
+  /* Empurrar */
+  flex_parede: {props:['floor',['wall',158]], focus:['arms'], track:'sh', ao:[0,-20], ghost:1, F:[
+    {...line([66,172], [104,66], 68), h1:[154,82], f1:[66,172], fa:-10, ms:900, hold:350, say:'Empurre a parede'},
+    {...line([66,172], [124,72], 68), h1:[154,82], f1:[66,172], fa:-10, ms:1200, hold:250, say:'Leve o peito à parede'}]},
+  flex_inclinada: {props:['floor',['bench',126,146,54]], focus:['arms'], track:'sh', ao:[0,-22], ghost:1, F:[
+    {...line([58,169], [144,100]), h1:[150,146], f1:[58,169], fa:35, ms:900, hold:350, say:'Empurre o banco'},
+    {...line([58,169], [154,120]), h1:[150,146], f1:[58,169], fa:35, ms:1200, hold:250, say:'Peito perto do banco'}]},
+  flex_joelhos: {focus:['arms'], track:'sh', ao:[0,-22], ghost:1, F:[
+    {...line([80,172], [142,126], 34), h1:[146,174], f1:[48,156], fa:200, ms:900, hold:350, say:'Empurre o chão'},
+    {...line([80,172], [146,154], 34), h1:[146,174], f1:[48,160], fa:200, ms:1200, hold:250, say:'Desça com o tronco reto'}]},
+  flexao: {focus:['arms'], track:'sh', ao:[0,-22], ghost:1, F:PUSH_FR([150,174], [146,126], [148,154])},
+  flex_diamante: {focus:['arms'], track:'sh', ao:[0,-22], ghost:1, F:[
+    {...line([36,169], [138,126]), h1:[140,174], f1:[36,169], fa:40, ms:900, hold:350, say:'Mãos juntas sob o peito'},
+    {...line([36,169], [140,154]), h1:[140,174], f1:[36,169], fa:40, eb:1, ms:1300, hold:250, say:'Cotovelos colados ao corpo'}]},
+  flex_arqueiro: {front:true, noLegs:true, torso:14, sw:14, props:['floor'], focus:['arms'], track:'head', ao:[0,-18], F:[
+    {hip:[100,148], t:-90, h1:[60,174], h2:[140,174], eb:1, eb2:-1, ms:900, hold:300, say:'Mãos bem afastadas'},
+    {hip:[76,172], t:-90, h1:[60,174], h2:[140,174], eb:1, eb2:-1, ms:1200, hold:300, say:'Desça para um lado'},
+    {hip:[100,148], t:-90, h1:[60,174], h2:[140,174], eb:1, eb2:-1, ms:900, hold:300, say:'Volte ao centro'},
+    {hip:[124,172], t:-90, h1:[60,174], h2:[140,174], eb:1, eb2:-1, ms:1200, hold:300, say:'Agora o outro lado'}]},
+  pseudo_planche: {focus:['arms','core'], track:'sh', ao:[0,-22], ghost:1, F:[
+    {...line([28,169], [138,128]), h1:[116,174], f1:[28,169], fa:40, ms:900, hold:350, say:'Ombros à frente das mãos'},
+    {...line([28,169], [144,156]), h1:[116,174], f1:[28,169], fa:40, ms:1400, hold:250, say:'Desça mantendo a inclinação'}]},
+  flex_declinada: {props:['floor',['bench',14,140,46]], focus:['arms'], track:'sh', ao:[0,-22], ghost:1, F:[
+    {...line([36,134], [144,128]), h1:[150,174], f1:[36,134], fa:20, ms:900, hold:350, say:'Pés no banco, empurre'},
+    {...line([36,134], [150,156]), h1:[150,174], f1:[36,134], fa:20, ms:1300, hold:250, say:'Desça o peito'}]},
+  flex_palmas: {focus:['arms'], track:'sh', ao:[0,-22], F:[
+    {...line([36,169], [146,126]), h1:[150,174], f1:[36,169], fa:40, ms:700, hold:250, say:'Posição de flexão'},
+    {...line([36,169], [148,154]), h1:[150,174], f1:[36,169], fa:40, ms:900, hold:80, say:'Desça'},
+    {...line([36,169], [140,104]), h1:[160,128], f1:[36,169], fa:40, eb:1, ms:240, hold:140, ease:'out', say:'Empurre e bata palmas!'},
+    {...line([36,169], [146,130]), h1:[150,174], f1:[36,169], fa:40, ms:260, hold:300, ease:'in', say:'Aterrisse macio'}]},
+  pike: {focus:['arms'], track:'head', ao:[16,-8], ghost:1, F:[
+    {hip:[92,110], t:43, h1:[146,174], f1:[60,172], fa:20, ms:900, hold:350, say:'Quadril alto, em V'},
+    {hip:[110,120], t:55, h1:[146,174], f1:[60,172], fa:20, ms:1300, hold:250, say:'Cabeça à frente das mãos'}]},
+  merg_banco: {props:['floor',['bench',26,128,56]], focus:['arms'], track:'hip', ao:[18,0], ghost:1, F:[
+    {hip:[94,128], t:-95, h1:[80,128], f1:[150,172], fa:-60, ms:900, hold:300, say:'Empurre até estender'},
+    {hip:[95,156], t:-95, h1:[80,128], f1:[150,172], fa:-60, ms:1200, hold:250, say:'Desça até 90° nos cotovelos'}]},
+  mergulho: {props:[['par',100]], focus:['arms'], track:'sh', ao:[22,0], ghost:1, F:[
+    {hip:[98,99], t:-86, h1:[100,100], f1:[76,150], fa:30, ms:900, hold:300, say:'Braços estendidos'},
+    {hip:[98,124], t:-74, h1:[100,100], f1:[74,172], fa:30, ms:1300, hold:250, say:'Incline e desça até 90°'}]},
+
+  /* Puxar */
+  suspensao: {props:[['bar',14]], focus:['arms'], F:[
+    {...HANG, hip:[100,113], ms:1600, hold:300, say:'Pendure com os braços estendidos'},
+    {...HANG, hip:[100,109], ms:1600, hold:900, say:'Ombros longe das orelhas'}]},
+  escapula: {props:[['bar',14]], focus:['arms'], track:'hip', ao:[20,0], ghost:1, F:[
+    {...HANG, hip:[100,113], ms:800, hold:400, say:'Solte devagar'},
+    {...HANG, hip:[100,104], n:-4, ms:800, hold:500, say:'Puxe só os ombros para baixo'}]},
+  remada_aus: {props:['floor',['lowbar',126,192,96]], focus:['arms'], track:'sh', ao:[0,22], ghost:1, F:[
+    {...line([36,170], [146,146]), h1:[150,98], f1:[36,170], fa:-60, eb:-1, ms:1000, hold:300, say:'Braços estendidos, corpo reto'},
+    {...line([36,170], [132,110]), h1:[150,98], f1:[36,170], fa:-60, eb:-1, ms:900, hold:400, say:'Puxe o peito até a barra'}]},
+  remada_aus_pes: {props:['floor',['bench',12,140,46],['lowbar',126,192,96]], focus:['arms'], track:'sh', ao:[0,22], ghost:1, F:[
+    {...line([34,134], [146,146]), h1:[150,98], f1:[34,134], fa:-70, eb:-1, ms:1000, hold:300, say:'Pés no banco, braços estendidos'},
+    {...line([34,134], [140,110]), h1:[150,98], f1:[34,134], fa:-70, eb:-1, ms:900, hold:400, say:'Puxe o peito até a barra'}]},
+  remada_mochila: {props:['floor','bag'], focus:['arms'], track:'w1', ao:[16,6], ghost:1, F:[
+    {hip:[94,108], t:-38, h1:[134,132], f1:[100,172], ms:1000, hold:300, say:'Costas retas, braços soltos'},
+    {hip:[94,108], t:-38, h1:[112,104], eb:1, f1:[100,172], ms:800, hold:400, say:'Puxe até o umbigo'}]},
+  barra_negativa: {props:[['bar',14]], focus:['arms'], track:'hip', ao:[22,0], ghost:2, F:[
+    {...PULL_TOP, ms:700, hold:500, ease:'out', say:'Comece no alto (com apoio)'},
+    {...HANG, hip:[100,96], f1:[100,162], ms:4500, hold:0, ease:'lin', say:'Desça em 5 segundos'},
+    {...HANG, ms:600, hold:500, say:'Braços estendidos'}]},
+  barra: {props:[['bar',14]], focus:['arms'], track:'hip', ao:[22,0], ghost:1, F:[
+    {...HANG, ms:1200, hold:350, say:'Desça até estender'},
+    {...PULL_TOP, ms:900, hold:300, say:'Queixo acima da barra'}]},
+  barra_supinada: {props:[['bar',14]], focus:['arms'], track:'hip', ao:[22,0], ghost:1, F:[
+    {...HANG, ms:1200, hold:350, say:'Palmas viradas para você'},
+    {...PULL_TOP, ms:900, hold:300, say:'Cotovelos para baixo e para trás'}]},
+  barra_arqueiro: {front:true, props:[['bar',14,40,160]], focus:['arms'], track:'head', ao:[0,-16], F:[
+    {hip:[100,108], t:-90, h1:[66,16], h2:[134,16], f1:[96,176], f2:[104,176], eb:-1, eb2:1, ms:900, hold:300, say:'Pegada bem aberta'},
+    {hip:[80,84], t:-94, h1:[66,16], h2:[134,16], f1:[78,152], f2:[86,152], eb:-1, eb2:1, ms:1100, hold:300, say:'Puxe para um lado'},
+    {hip:[100,108], t:-90, h1:[66,16], h2:[134,16], f1:[96,176], f2:[104,176], eb:-1, eb2:1, ms:900, hold:300, say:'Desça ao centro'},
+    {hip:[120,84], t:-86, h1:[66,16], h2:[134,16], f1:[114,152], f2:[122,152], eb:-1, eb2:1, ms:1100, hold:300, say:'Agora o outro lado'}]},
+  muscle_up: {props:[['bar',70]], vb:[0,-12,200,266], focus:['arms'], track:'sh', ao:[24,0], F:[
+    {hip:[100,166], t:-90, h1:[100,72], f1:[100,232], fa:60, ms:900, hold:300, say:'Pendurado, ombros ativos'},
+    {hip:[94,128], t:-88, h1:[100,72], f1:[86,194], fa:60, n:-8, ms:600, hold:0, ease:'out', say:'Puxe explosivo'},
+    {hip:[100,104], t:-76, h1:[100,72], f1:[88,170], fa:60, eb:1, ms:380, hold:0, say:'Passe o peito sobre a barra'},
+    {hip:[100,72], t:-90, h1:[100,72], f1:[100,140], fa:60, eb:1, ms:600, hold:400, say:'Empurre até estender'},
+    {hip:[100,104], t:-76, h1:[100,72], f1:[88,170], fa:60, eb:1, ms:700, hold:0, say:'Desça com controle'}]},
+
+  /* Pernas */
+  sentar_levantar: {props:['floor',['chair',56,136]], focus:['legs'], track:'hip', ao:[-20,0], F:[
+    {hip:[80,132], t:-80, h1:[106,128], f1:[110,172], ms:1200, hold:500, say:'Sente devagar'},
+    {hip:[86,130], t:-48, h1:[118,118], f1:[110,172], ms:500, hold:0, say:'Incline o tronco'},
+    {hip:[108,104], t:-90, h1:[111,107], f1:[110,172], ms:800, hold:500, say:'Levante sem as mãos'}]},
+  agachamento: {focus:['legs'], track:'hip', ao:[-22,0], ghost:1, F:[
+    {...STAND, ms:900, hold:450, say:'Suba empurrando o chão'},
+    {...SQ_BOT, ms:1300, hold:250, say:'Quadril para trás e para baixo'}]},
+  afundo: {focus:['legs'], track:'hip', ao:[-22,0], F:[
+    {...standAt(92), f2:[89,172], ms:800, hold:400, say:'Volte à posição inicial'},
+    {hip:[94,136], t:-90, h1:[97,140], f1:[130,172], f2:[62,164], fa2:35, ms:1100, hold:300, say:'Passo à frente e desça'}]},
+  afundo_reverso: {focus:['legs'], track:'hip', ao:[-22,0], F:[
+    {...standAt(112), f2:[109,172], ms:800, hold:400, say:'Volte empurrando o calcanhar'},
+    {hip:[100,136], t:-90, h1:[103,140], f1:[114,172], f2:[66,164], fa2:35, ms:1100, hold:300, say:'Passo para trás e desça'}]},
+  bulgaro: {props:['floor',['bench',24,140,48]], focus:['legs'], track:'hip', ao:[-24,-6], ghost:1, F:[
+    {hip:[98,108], t:-88, h1:[100,112], f1:[124,172], f2:[50,134], fa2:180, ms:900, hold:400, say:'Suba pelo calcanhar da frente'},
+    {hip:[96,136], t:-84, h1:[98,140], f1:[124,172], f2:[50,134], fa2:180, ms:1200, hold:250, say:'Desça com o tronco firme'}]},
+  pistol_assist: {props:['floor',['post',152]], focus:['legs'], track:'hip', ao:[-24,0], ghost:1, F:[
+    {hip:[106,104], t:-90, h1:[150,100], f1:[106,172], f2:[128,160], fa2:-20, kb2:-1, ms:1000, hold:400, say:'Use o apoio só o necessário'},
+    {hip:[92,150], t:-62, h1:[150,118], f1:[108,172], f2:[160,146], fa2:-30, ms:1500, hold:250, say:'Desça numa perna só'}]},
+  pistol: {focus:['legs'], track:'hip', ao:[-24,0], ghost:1, F:[
+    {hip:[104,104], t:-90, h1:[150,92], f1:[104,172], f2:[128,160], fa2:-20, ms:1000, hold:400, say:'Suba sem o joelho entrar'},
+    {hip:[90,150], t:-60, h1:[152,112], f1:[106,172], f2:[160,146], fa2:-30, ms:1600, hold:250, say:'Perna livre estendida à frente'}]},
+  ponte: {focus:['legs','core'], track:'hip', ao:[0,-20], ghost:1, F:[
+    {hip:[98,167], t:177, h1:[98,174], f1:[136,172], ms:1000, hold:300, say:'Desça devagar'},
+    {hip:[98,140], t:150, h1:[98,174], f1:[136,172], ms:800, hold:700, say:'Suba o quadril e segure'}]},
+  ponte_uni: {focus:['legs','core'], track:'hip', ao:[0,-20], ghost:1, F:[
+    {hip:[98,167], t:177, h1:[98,174], f1:[158,140], f2:[136,172], kb:-1, ms:1000, hold:300, say:'Uma perna estendida no ar'},
+    {hip:[98,140], t:150, h1:[98,174], f1:[156,110], f2:[136,172], ms:800, hold:700, say:'Suba pelo calcanhar de apoio'}]},
+  panturrilha: {props:['floor'], focus:['legs'], track:'hip', ao:[-20,0], ghost:1, F:[
+    {...STAND, ms:1100, hold:250, say:'Desça devagar'},
+    {...STAND, hip:[100,91], h1:[103,94], f1:[100,159], fa:62, ms:800, hold:500, say:'Suba na ponta dos pés'}]},
+  agach_salto: {focus:['legs'], track:'hip', ao:[-24,0], F:[
+    {...STAND, ms:500, hold:150, say:'Prepare'},
+    {...SQ_BOT, h1:[62,128], ms:600, hold:80, say:'Agache'},
+    {hip:[100,84], t:-90, h1:[112,4], f1:[100,150], fa:60, ms:280, hold:120, ease:'out', say:'Salte!'},
+    {hip:[90,128], t:-66, h1:[140,108], f1:[100,172], ms:300, hold:250, ease:'in', say:'Aterrisse macio'}]},
+  cadeirinha: {props:['floor',['wall',66,-1]], focus:['legs'], F:[
+    {hip:[78,132], t:-90, h1:[104,128], f1:[112,172], ms:1600, hold:600, say:'Costas na parede'},
+    {hip:[78,131], t:-90, h1:[104,127], f1:[112,172], ms:1600, hold:600, say:'Coxas paralelas, segure'}]},
+  subida_banco: {props:['floor',['box',112,140,62]], focus:['legs'], track:'hip', ao:[-22,0], F:[
+    {...standAt(88), ms:600, hold:300, say:'De frente para o banco'},
+    {hip:[90,106], t:-88, h1:[93,110], f1:[128,135], f2:[86,172], ms:600, hold:150, say:'Pé inteiro no banco'},
+    {hip:[124,68], t:-90, h1:[127,72], f1:[128,135], f2:[120,135], ms:900, hold:400, say:'Suba pelo calcanhar de cima'},
+    {hip:[90,106], t:-88, h1:[93,110], f1:[128,135], f2:[86,172], ms:900, hold:150, say:'Desça com controle'}]},
+  nordico: {props:['floor',['pad',42,156]], focus:['legs'], track:'head', ao:[0,-18], ghost:2, F:[
+    {hip:[90,136], t:-90, h1:[100,108], f1:[56,170], fa:180, ms:1000, hold:400, say:'Corpo reto, calcanhares presos'},
+    {hip:[116,148], t:-40, h1:[160,140], f1:[56,170], fa:180, ms:2400, hold:0, ease:'lin', say:'Desça o mais devagar possível'},
+    {hip:[122,158], t:-20, h1:[164,174], f1:[56,170], fa:180, ms:500, hold:300, say:'Amorteça com as mãos'}]},
+
+  /* Core */
+  prancha: {focus:['core'], F:[
+    {...line([30,165], [142,147]), h1:[166,174], f1:[30,165], fa:45, ms:1800, hold:400, say:'Corpo reto da cabeça aos pés'},
+    {...line([30,165], [142,146]), h1:[166,174], f1:[30,165], fa:45, ms:1800, hold:400, say:'Abdômen e glúteos firmes'}]},
+  prancha_lateral: {focus:['core'], track:'hip', ao:[0,-18], ghost:1, F:[
+    {...line([30,170], [148,140]), hip:[94,166], h1:[160,174], h2:[96,160], f1:[30,170], fa:0, noEye:true, ms:900, hold:300, say:'Antebraço sob o ombro'},
+    {...line([30,170], [148,136]), h1:[160,174], h2:[150,86], f1:[30,170], fa:0, noEye:true, ms:900, hold:1500, say:'Suba o quadril e segure'}]},
+  escalador: {focus:['core','legs'], track:'k1', ao:[0,16], F:[
+    {...line([40,166], [146,128]), h1:[150,174], f1:[118,166], f2:[40,166], fa:40, kb:-1, ms:320, hold:40, say:'Joelho ao peito'},
+    {...line([40,166], [146,128]), h1:[150,174], f1:[40,166], f2:[118,166], fa:40, ms:320, hold:40, say:'Troque rápido'}]},
+  canivete: {focus:['core'], track:'head', ao:[-14,-10], ghost:1, F:[
+    {hip:[100,168], t:180, h1:[8,166], f1:[166,166], fa:-70, ms:1100, hold:250, say:'Desça sem relaxar'},
+    {hip:[100,170], t:-128, h1:[134,98], f1:[144,116], fa:-50, ms:700, hold:300, ease:'out', say:'Mãos nos pés'}]},
+  elev_pernas: {focus:['core'], track:'a1', ao:[16,0], ghost:1, F:[
+    {...LIE, f1:[166,160], ms:1400, hold:300, say:'Desça sem encostar'},
+    {...LIE, f1:[106,100], fa:-10, ms:900, hold:250, say:'Pernas até a vertical'}]},
+  hollow: {focus:['core'], F:[
+    {hip:[100,168], t:192, n:-12, h1:[10,148], f1:[166,152], fa:-30, arch:5, ms:1800, hold:400, say:'Lombar colada no chão'},
+    {hip:[100,168], t:193, n:-12, h1:[10,150], f1:[166,154], fa:-30, arch:5, ms:1800, hold:400, say:'Ombros e pernas fora do chão'}]},
+  elev_joelhos_barra: {props:[['bar',14]], focus:['core'], track:'k1', ao:[18,6], ghost:1, F:[
+    {...HANG, ms:1100, hold:300, say:'Desça sem balançar'},
+    {...HANG, f1:[130,142], ms:800, hold:300, say:'Joelhos na altura do quadril'}]},
+  toes_bar: {props:[['bar',14]], focus:['core'], track:'a1', ao:[16,0], ghost:1, F:[
+    {...HANG, ms:1200, hold:300, say:'Desça devagar'},
+    {...HANG, hip:[110,104], t:-104, f1:[112,26], fa:-60, ms:900, hold:300, say:'Pés até a barra'}]},
+  l_sit: {props:['floor',['ptt',100,158]], focus:['core','arms'], F:[
+    {hip:[100,150], t:-88, h1:[100,158], f1:[168,150], fa:-10, ms:1800, hold:400, say:'Empurre o chão para longe'},
+    {hip:[100,148], t:-88, h1:[100,158], f1:[168,147], fa:-10, ms:1800, hold:400, say:'Pernas retas e paralelas'}]},
+
+  /* Habilidades */
+  parada_parede: {props:['floor',['wall',122]], focus:['arms','core'], F:[
+    {hip:[90,112], t:48, h1:[100,174], f1:[52,172], f2:[66,112], fa:20, ms:900, hold:300, say:'Mãos a um palmo da parede'},
+    {hip:[101,80], t:90, h1:[100,174], f1:[114,14], fa:-90, ms:700, hold:2200, ease:'out', say:'Suba as pernas', hsay:'Calcanhares na parede, segure'}]},
+  parada: {focus:['arms','core'], F:[
+    {hip:[98,80], t:89, h1:[100,174], f1:[96,12], fa:-90, ms:1400, hold:200, say:'Corrija com os dedos'},
+    {hip:[102,80], t:91, h1:[100,174], f1:[104,12], fa:-90, ms:1400, hold:200, say:'Corpo alinhado, olhe as mãos'}]},
+  tuck_lever: {props:[['bar',14]], focus:['core','arms'], F:[
+    {hip:[146,64], t:180, h1:[100,16], f1:[140,84], kb:1, fa:0, ms:1600, hold:500, say:'Braços estendidos'},
+    {hip:[146,62], t:180, h1:[100,16], f1:[140,82], kb:1, fa:0, ms:1600, hold:500, say:'Quadril na altura dos ombros'}]},
+  corvo: {focus:['arms','core'], track:'head', ao:[0,-16], F:[
+    {hip:[92,136], t:-30, h1:[132,174], f1:[100,172], ms:900, hold:500, say:'Joelhos apoiados nos braços'},
+    {hip:[96,100], t:42, h1:[132,174], f1:[90,140], ms:1100, hold:1600, say:'Incline e tire os pés', hsay:'Equilibre e respire'}]},
+};
+FIG.pull = FIG.barra;
+/* Pré-calcula durações e poses normalizadas */
+Object.values(FIG).forEach(A => {
+  if (A.F[0].P) return;
+  A.F.forEach(f => { f.ms = f.ms ?? 900; f.hold = f.hold ?? 250; f.P = norm(f, A); });
+  A.total = A.F.reduce((s, f) => s + f.ms + f.hold, 0);
+});
 const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 function animLoop(now){
-  document.querySelectorAll('[data-fig]').forEach(el => {
-    const key = el.dataset.fig, A = ANIMS[key]; if (!A) return;
-    const ph = (now % A.d) / A.d, u = ph < .5 ? ph*2 : 2 - ph*2;
-    const t = u < .5 ? 2*u*u : 1 - Math.pow(-2*u+2, 2)/2;
-    el.innerHTML = figSVG(key, t);
-  });
+  document.querySelectorAll('[data-fig]').forEach(el => { el.innerHTML = figSVG(el.dataset.fig, now + 1000); });
   if (!reduceMotion) requestAnimationFrame(animLoop);
 }
-function staticFigs(){ document.querySelectorAll('[data-fig]').forEach(el => { el.innerHTML = figSVG(el.dataset.fig, .5); }); }
+function staticFigs(){ document.querySelectorAll('[data-fig]').forEach(el => { el.innerHTML = figSVG(el.dataset.fig, null); }); }
+
+/* Cada exercício usa a própria animação */
+EXERCISES.forEach(e => { if (FIG[e.id]) e.a = e.id; });
 
 /* ---------- Estado e armazenamento ---------- */
 const KEY = 'tracao.v1'; /* nome antigo mantido de propósito: trocar apagaria os dados de quem já usa */
