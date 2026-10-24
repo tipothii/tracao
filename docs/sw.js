@@ -1,5 +1,5 @@
 /* Service worker do Magni: guarda o app inteiro para funcionar sem internet. */
-const VERSION = '1.2.1-4c0ca44a';
+const VERSION = '1.3.0-a69ed15e';
 const CACHE = 'tracao-' + VERSION;
 const ASSETS = [
   "./",
