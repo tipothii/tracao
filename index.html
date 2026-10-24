@@ -6,10 +6,10 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Manrope:wght@400;500;600;700&display=swap">
 <style>
 /* Layout: uma coluna de celular com barra de abas embaixo; o bloco em bronze do "próximo treino" é a única superfície forte.
-   Marca Magni: runa Mannaz em bronze; escuro em verde-pinho nórdico, claro em pedra-gelo. */
+   Marca Magni: escuro em verde-pinho com sálvia clara; claro em pedra-gelo com pinho. Bronze (--brand) só nos detalhes da marca. */
 :root{
   --bg:#0E1A17; --surface:#14241F; --surface-2:#1B2E29; --line:#263C36;
-  --fg:#ECEFEA; --muted:#93A39D; --accent:#C8893D; --accent-text:#DDA25A; --on-accent:#1A1003;
+  --fg:#ECEFEA; --muted:#93A39D; --accent:#A9CDB8; --accent-text:#B9DCC7; --on-accent:#0E1A17; --brand:#C8893D;
   --good:#5FD3A8; --warn:#F2B441; --danger:#FF7A6B;
   --font-display:'Chakra Petch','Arial Narrow',system-ui,sans-serif;
   --font-body:'Manrope',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
@@ -22,20 +22,20 @@
 @media (prefers-color-scheme: light){
   :root:not([data-theme="dark"]){
     --bg:#F0F2EE; --surface:#FFFFFF; --surface-2:#E3E8E3; --line:#D2DAD4;
-    --fg:#14201C; --muted:#56655F; --accent:#5C3D01; --accent-text:#6A4604; --on-accent:#FFFFFF;
+    --fg:#14201C; --muted:#56655F; --accent:#1E4A3F; --accent-text:#1E4A3F; --on-accent:#EEF4EF; --brand:#5C3D01;
     --good:#1E8A5C; --warn:#A06A00; --danger:#C23B2E;
     color-scheme:light;
   }
 }
 :root[data-theme="light"]{
   --bg:#F0F2EE; --surface:#FFFFFF; --surface-2:#E3E8E3; --line:#D2DAD4;
-    --fg:#14201C; --muted:#56655F; --accent:#5C3D01; --accent-text:#6A4604; --on-accent:#FFFFFF;
+    --fg:#14201C; --muted:#56655F; --accent:#1E4A3F; --accent-text:#1E4A3F; --on-accent:#EEF4EF; --brand:#5C3D01;
     --good:#1E8A5C; --warn:#A06A00; --danger:#C23B2E;
   color-scheme:light;
 }
 :root[data-theme="dark"]{
   --bg:#0E1A17; --surface:#14241F; --surface-2:#1B2E29; --line:#263C36;
-    --fg:#ECEFEA; --muted:#93A39D; --accent:#C8893D; --accent-text:#DDA25A; --on-accent:#1A1003;
+    --fg:#ECEFEA; --muted:#93A39D; --accent:#A9CDB8; --accent-text:#B9DCC7; --on-accent:#0E1A17; --brand:#C8893D;
     --good:#5FD3A8; --warn:#F2B441; --danger:#FF7A6B;
   color-scheme:dark;
 }
@@ -61,7 +61,7 @@ ol,ul{margin:0;padding:0;list-style:none}
 .topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-top:6px}
 .brand{display:flex;align-items:baseline;gap:10px}
 .brand{align-items:center}
-.brand .rune{width:17px;height:28px;flex:none;background:var(--accent-text);-webkit-mask:var(--rune) center/contain no-repeat;mask:var(--rune) center/contain no-repeat}
+.brand .rune{width:17px;height:28px;flex:none;background:var(--brand);-webkit-mask:var(--rune) center/contain no-repeat;mask:var(--rune) center/contain no-repeat}
 .brand b{display:block;width:92px;height:19px;background:var(--fg);-webkit-mask:var(--wordmark) left center/contain no-repeat;mask:var(--wordmark) left center/contain no-repeat;font-size:0}
 .brand span{font-size:13px;color:var(--muted)}
 .icon-btn{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:var(--surface);border:1px solid var(--line)}
@@ -79,7 +79,7 @@ ol,ul{margin:0;padding:0;list-style:none}
 .hero::before{content:"";position:absolute;inset:0;z-index:-1;opacity:.5;background:
   radial-gradient(120% 80% at 100% 0%,color-mix(in srgb,var(--on-accent) 20%,transparent),transparent 55%),
   repeating-linear-gradient(-28deg,color-mix(in srgb,var(--on-accent) 5%,transparent) 0 2px,transparent 2px 9px)}
-.hero-mark{position:absolute;right:-18px;top:-14px;width:150px;height:240px;z-index:-1;background:var(--on-accent);opacity:.16;-webkit-mask:var(--rune) center/contain no-repeat;mask:var(--rune) center/contain no-repeat;pointer-events:none;font-size:0}
+.hero-mark{position:absolute;right:-18px;top:-14px;width:150px;height:240px;z-index:-1;background:var(--brand);opacity:.4;-webkit-mask:var(--rune) center/contain no-repeat;mask:var(--rune) center/contain no-repeat;pointer-events:none;font-size:0}
 .hero .label{color:color-mix(in srgb,var(--on-accent) 78%,transparent)}
 .hero-title{font-size:38px;max-width:12ch}
 .hero-meta{display:flex;flex-wrap:wrap;gap:6px}
@@ -276,7 +276,7 @@ ol,ul{margin:0;padding:0;list-style:none}
 .rpe button{height:44px;border-radius:10px;background:var(--surface);border:1px solid var(--line);font-family:var(--font-display);font-weight:800;font-size:16px}
 .rpe button[aria-pressed="true"]{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
 .pr-list li{display:flex;align-items:center;gap:10px;padding:8px 0;font-size:14px}
-.pr-list svg{width:18px;height:18px;color:var(--warn);flex:none}
+.pr-list svg{width:18px;height:18px;color:var(--brand);flex:none}
 
 .confirm{position:absolute;inset:0;z-index:5;display:grid;place-items:end center;background:rgba(5,7,10,.6);padding:16px}
 .confirm-box{width:100%;max-width:520px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:20px;display:flex;flex-direction:column;gap:14px}
