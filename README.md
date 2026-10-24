@@ -1,10 +1,10 @@
-# Tração
+# Magni
 
-App de calistenia instalável (PWA): programas, escadas de progressão, player de treino com cronômetro e progresso. Não pede conta, e os dados ficam só no aparelho.
+App de calistenia **Magni** (força do próprio corpo) instalável (PWA): programas, escadas de progressão, player de treino com cronômetro e progresso. Não pede conta, e os dados ficam só no aparelho.
 
 - Funciona no **iPhone** (Safari → Compartilhar → Adicionar à Tela de Início), no **Android** (Instalar app) e no computador.
 - Funciona **sem internet** depois de aberto uma vez.
-- Pesa cerca de **350 KB** no total, contando fontes e ícones.
+- Pesa cerca de **460 KB** no total, contando fontes e ícones.
 
 ## Estrutura
 
@@ -31,4 +31,4 @@ No repositório: **Settings → Pages → Build and deployment → Deploy from a
 
 ## Ícones
 
-Para mudar o ícone, edite `pwa/icon.svg` e `pwa/icon-maskable.svg` e rode `node pwa/icons.js` (precisa do Playwright).
+Os ícones saem da runa do logo (`pwa/brand/rune-mask.png`, extraída de `pwa/brand/logo-original.png`) em bronze sobre verde-pinho. Para outra versão, gere novos PNGs em `pwa/icons/` com os mesmos nomes.

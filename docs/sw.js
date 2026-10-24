@@ -1,19 +1,22 @@
-/* Service worker do Tração: guarda o app inteiro para funcionar sem internet. */
-const VERSION = '1.1.0-ff1380ca';
+/* Service worker do Magni: guarda o app inteiro para funcionar sem internet. */
+const VERSION = '1.2.0-ca2a91c5';
 const CACHE = 'tracao-' + VERSION;
 const ASSETS = [
   "./",
   "./index.html",
+  "./fonts/cIflMapbsEk7TDLdtEz1BwkeJI91R5_F.woff2",
+  "./fonts/cIflMapbsEk7TDLdtEz1BwkeJI91SZ_F7AY.woff2",
+  "./fonts/cIflMapbsEk7TDLdtEz1BwkeQI51R5_F.woff2",
+  "./fonts/cIflMapbsEk7TDLdtEz1BwkeQI51SZ_F7AY.woff2",
+  "./fonts/cIflMapbsEk7TDLdtEz1BwkebIl1R5_F.woff2",
+  "./fonts/cIflMapbsEk7TDLdtEz1BwkebIl1SZ_F7AY.woff2",
   "./fonts/fonts.css",
-  "./fonts/ieVn2YZDLWuGJpnzaiwFXS9tYtpT59CjCQ.woff2",
-  "./fonts/ieVn2YZDLWuGJpnzaiwFXS9tYtpd59A.woff2",
-  "./fonts/k3kQo8UDI-1M0wlSfdfoLnnA.woff2",
-  "./fonts/k3kQo8UDI-1M0wlSfdnoLg.woff2",
+  "./fonts/xn7gYHE41ni1AdIRggexSg.woff2",
+  "./fonts/xn7gYHE41ni1AdIRggmxSuXd.woff2",
   "./icons/apple-touch-icon.png",
   "./icons/favicon-32.png",
   "./icons/icon-192.png",
   "./icons/icon-512.png",
-  "./icons/icon.svg",
   "./icons/maskable-192.png",
   "./icons/maskable-512.png",
   "./manifest.webmanifest"

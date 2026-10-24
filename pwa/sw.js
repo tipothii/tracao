@@ -1,4 +1,4 @@
-/* Service worker do Tração: guarda o app inteiro para funcionar sem internet. */
+/* Service worker do Magni: guarda o app inteiro para funcionar sem internet. */
 const VERSION = '__VERSION__';
 const CACHE = 'tracao-' + VERSION;
 const ASSETS = __ASSETS__;

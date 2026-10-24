@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Gera a versão instalável (PWA) do Tração em docs/, pronta para o GitHub Pages.
+"""Gera a versão instalável (PWA) do Magni em docs/, pronta para o GitHub Pages.
 
 Uso: python3 build.py
 - index.html é a fonte única do app (também publicada como prévia no Claude).
@@ -13,8 +13,8 @@ ROOT = Path(__file__).parent
 PWA = ROOT / 'pwa'
 OUT = ROOT / 'docs'
 VERSION = (ROOT / 'VERSION').read_text().strip()
-FONTS_URL = ('https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900'
-             '&family=Hanken+Grotesk:wght@400;500;600;700&display=swap')
+FONTS_URL = ('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700'
+             '&family=Manrope:wght@400;500;600;700&display=swap')
 UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/120 Safari/537.36'
 
 
@@ -47,14 +47,13 @@ HEAD = '''<!doctype html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Treinos de calistenia com programas, escadas de progressão e cronômetro. Sem conta, com os dados no seu aparelho.">
-<meta name="theme-color" content="#0C0F13">
+<meta name="description" content="Força do próprio corpo. Treinos de calistenia com programas, escadas de progressão e cronômetro, sem conta e com os dados no seu aparelho.">
+<meta name="theme-color" content="#0E1A17">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="Tração">
+<meta name="apple-mobile-web-app-title" content="Magni">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
 <link rel="icon" href="icons/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <link rel="stylesheet" href="fonts/fonts.css">
@@ -135,7 +134,7 @@ def build():
     (OUT / 'sw.js').write_text(sw)
 
     total = sum(p.stat().st_size for p in OUT.rglob('*') if p.is_file())
-    print(f'Tração {VERSION} ({build_id}) gerado em docs/: {len(assets)} arquivos em cache, {total/1024:.0f} KB no total')
+    print(f'Magni {VERSION} ({build_id}) gerado em docs/: {len(assets)} arquivos em cache, {total/1024:.0f} KB no total')
 
 
 if __name__ == '__main__':
